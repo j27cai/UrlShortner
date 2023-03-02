@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  client:
+    build: ./urlshortner
+    ports:
+      - "3001:80"
+
+  server:
+    build: ./service
+    ports:
+      - '8001:8000'
