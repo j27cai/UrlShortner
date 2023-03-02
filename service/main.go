@@ -1,9 +1,15 @@
 package main
 import (
     "database/sql"
-    // "fmt"
+    "fmt"
     "log"
+    "math/rand"
     "net/http"
+
+    "client"
+    "common"
+    "sql"
+    "server"
 
     _ "github.com/mattn/go-sqlite3"
 )
@@ -35,30 +41,6 @@ func main() {
     http.HandleFunc("/list", listHandler)
     log.Fatal(http.ListenAndServe(":8000", nil))
 }
-
-func redirectHandler(w http.ResponseWriter, r *http.Request) {
-    http.Redirect(w, r, "https://google.com", http.StatusFound)
-}
-
-func shortenHandler(w http.ResponseWriter, r *http.Request) {
-	enableCors(&w)
-	if r.Method != http.MethodPost {
-        http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
-        return
-    }
-    w.Write([]byte("http://localhost:8080/" + "abcdef"))
-}
-
-// List all the current shortened URLs and Long Urls. Helpful endpoint so there's no need to keep track of everything
-// Ideally, this endpoint would turn into an universal get handler for urls based on users, pagination, and order by
-func listHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet {
-        http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
-        return
-    }
-    w.Write([]byte("http://localhost:8080/" + "abcdef"))
-}
-
 // For local development only
 func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
