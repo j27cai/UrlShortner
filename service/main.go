@@ -41,6 +41,7 @@ func redirectHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func shortenHandler(w http.ResponseWriter, r *http.Request) {
+	enableCors(&w)
 	if r.Method != http.MethodPost {
         http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
         return
@@ -56,4 +57,9 @@ func listHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
     w.Write([]byte("http://localhost:8080/" + "abcdef"))
+}
+
+// For local development only
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 }

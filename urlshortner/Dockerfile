@@ -5,6 +5,8 @@ WORKDIR /app
 COPY . /app
 
 RUN npm install
+RUN npm install axios
+RUN npm install react-copy-to-clipboard
 RUN npm run build
 
 FROM nginx:alpine
