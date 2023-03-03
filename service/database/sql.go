@@ -28,7 +28,7 @@ func Setup() (*Database, error) {
 
 func (d *Database) QueryLongURL(shortURL string) (string, error) {
 	var longURL string
-	err := db.QueryRow("SELECT long_url FROM urls WHERE short_url = ?", shortURL).Scan(&longURL)
+	err := d.db.QueryRow("SELECT long_url FROM urls WHERE short_url = ?", shortURL).Scan(&longURL)
 	if err == sql.ErrNoRows {
 	    return "", errors.New("Shortened URL does not exist")
 	} else if err != nil {
@@ -40,7 +40,7 @@ func (d *Database) QueryLongURL(shortURL string) (string, error) {
 
 func (d *Database) QueryShortURL(longURL string) (string, error) {
 	var shortURL string
-	err := db.QueryRow("SELECT short_url FROM urls WHERE long_url = ?", longURL).Scan(&shortURL)
+	err := d.db.QueryRow("SELECT short_url FROM urls WHERE long_url = ?", longURL).Scan(&shortURL)
 	if err == sql.ErrNoRows {
 		return "", errors.New("Long URL does not exist")
 	} else if err != nil {
@@ -51,7 +51,7 @@ func (d *Database) QueryShortURL(longURL string) (string, error) {
 }
 
 func (d *Database) InsertShortenedURL(id, shortURL string, longURL string) (error) {
-    if _, err := db.Exec("INSERT INTO urls (id, short_url, long_url) VALUES (?, ?, ?)", id, shortURL, longURL); err != nil {
+    if _, err := d.db.Exec("INSERT INTO urls (id, short_url, long_url) VALUES (?, ?, ?)", id, shortURL, longURL); err != nil {
         return err
     }
 
