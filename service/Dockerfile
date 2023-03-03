@@ -11,7 +11,7 @@ RUN go mod download
 # Build the app
 RUN go build
 
-# Expose port 8080
+# Expose port 8000
 EXPOSE 8000
 
 # Run the app

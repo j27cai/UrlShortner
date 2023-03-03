@@ -2,10 +2,17 @@ package sql
 
 import (
 	"database/sql"
+	"fmt"
 	_ "github.com/mattn/go-sqlite3"
 
 	"errors"
 )
+
+type Databases interface {
+	QueryLongURL(shortURL string) (string, error)
+	QueryShortURL(longURL string) (string, error)
+	InsertShortenedURL(id int64, shortURL string, longURL string) error
+}
 
 type Database struct {
 	db *sql.DB
@@ -50,8 +57,9 @@ func (d *Database) QueryShortURL(longURL string) (string, error) {
 	return shortURL, nil
 }
 
-func (d *Database) InsertShortenedURL(id, shortURL string, longURL string) (error) {
+func (d *Database) InsertShortenedURL(id int64, shortURL string, longURL string) (error) {
     if _, err := d.db.Exec("INSERT INTO urls (id, short_url, long_url) VALUES (?, ?, ?)", id, shortURL, longURL); err != nil {
+    	fmt.Println(err.Error())
         return err
     }
 

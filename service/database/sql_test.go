@@ -39,7 +39,7 @@ func TestDatabase_QueryLongURL(t *testing.T) {
     db := &Database{db: db}
     shortURL := "abc123"
     expectedLongURL := "https://www.google.com"
-    err = db.InsertShortenedURL("1", shortURL, expectedLongURL)
+    err = db.InsertShortenedURL(1, shortURL, expectedLongURL)
     if err != nil {
         t.Errorf("unexpected error: %v", err)
     }
@@ -63,7 +63,7 @@ func TestDatabase_QueryShortURL(t *testing.T) {
     db := &Database{db: db}
     shortURL := "abc123123"
     longURL := "https://www.google.coms"
-    err = db.InsertShortenedURL("1", shortURL, longURL)
+    err = db.InsertShortenedURL(1, shortURL, longURL)
     if err != nil {
         t.Errorf("unexpected error: %v", err)
     }
@@ -86,7 +86,7 @@ func TestDatabase_InsertShortenedURL(t *testing.T) {
 
     db := &Database{db: db}
     // Insert a new shortened URL
-    err = db.InsertShortenedURL("123", "short", "long")
+    err = db.InsertShortenedURL(123, "short", "long")
     if err != nil {
         t.Fatal(err)
     }
