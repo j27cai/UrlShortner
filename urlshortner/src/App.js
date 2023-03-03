@@ -8,11 +8,10 @@ function App() {
   const [userInput, setUserInput] = useState("");
 
   const fetchData = async () => {
-    event.preventDefault();
     try {
       const response = await axios.post(
         "https://localhost:8000/shorten",
-        { url }
+        { userInput }
       );
       setShortenedLink(response.data.shortUrl);
     } catch (error) {
